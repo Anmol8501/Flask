@@ -4,13 +4,19 @@ from model.users import Users
 from model.users import db
 
 from form import RegisterForm
-
+import os
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "your_secret_key_here"
-app.config["SQLALCHEMY_DATABASE_URI"] = (
+"""app.config["SQLALCHEMY_DATABASE_URI"] = (
     "postgresql://postgres:Nopassword%4003@localhost/test"
-)
+)///"""
+
+db_url = os.environ.get("DATABASE_URL")
+
+if db_url and db_url.startswith("postgres://"):
+    db_url = db_url.replace("postgres://", "postgresql://", 1)
+app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://social_post_0j58_user:eDD4QW7magysIgq83YBtvvxJOYAf8ZjH@dpg-d6t66l9j16oc73f4slo0-a/social_post_0j58"
 
 loginmanager = LoginManager()
 loginmanager.init_app(app)
